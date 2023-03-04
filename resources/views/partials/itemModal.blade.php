@@ -10,11 +10,18 @@
                 </div>
                 <div class="modal-body">
                     <input type="text" id="item_name" name="item_name" class="form-control" placeholder="Ex: Make Payment" required>
+                    @if ($errors->has('item_name'))
+                        <span class="text-danger"> {{ $errors->first('item_name') }}</span>
+                    @endif
+
                     <select name="status" id="status" class="form-control" required>
                         <option value="">---------</option>
                         <option value="1">Completed</option>
                         <option value="2">Not Completed</option>
                     </select>
+                    @if ($errors->has('status'))
+                        <span class="text-danger"> {{ $errors->first('status') }}</span>
+                    @endif
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>

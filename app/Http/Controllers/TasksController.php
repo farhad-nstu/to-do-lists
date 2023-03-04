@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\TaskRequest;
 use App\Repositories\TaskRepository;
 use Illuminate\Http\Request;
 
@@ -18,7 +19,7 @@ class TasksController extends Controller
         return $this->tasks->index($item_id);
     }
 
-    public function store(Request $request) {
+    public function store(TaskRequest $request) {
         return $this->tasks->store($request);
     }
 

@@ -4,6 +4,10 @@
             <form action="{{ route('item.tasks.store') }}" method="POST">
                 @csrf 
                 <input type="hidden" name="item_id" id="item_id" value="{{ $item->id }}">
+                @if ($errors->has('item_id'))
+                    <span class="text-danger"> {{ $errors->first('item_id') }}</span>
+                @endif
+
                 <input type="hidden" name="task_id" id="task_id">
                 <div class="modal-header">
                     <h5 class="modal-title" id="myModalLabel">Modal title</h5>
@@ -11,11 +15,18 @@
                 </div>
                 <div class="modal-body">
                     <input type="text" id="task_name" name="task_name" class="form-control" placeholder="Ex: Make Payment Within Today" required>
+                    @if ($errors->has('task_name'))
+                        <span class="text-danger"> {{ $errors->first('task_name') }}</span>
+                    @endif
+
                     <select name="status" id="status" class="form-control" required>
                         <option value="">---------</option>
                         <option value="1">Completed</option>
                         <option value="2">Not Completed</option>
                     </select>
+                    @if ($errors->has('status'))
+                        <span class="text-danger"> {{ $errors->first('status') }}</span>
+                    @endif
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>

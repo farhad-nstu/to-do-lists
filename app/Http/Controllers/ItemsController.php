@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\ItemRequest;
 use Illuminate\Http\Request;
 use App\Repositories\ItemRepository;
 
@@ -18,7 +19,7 @@ class ItemsController extends Controller
         return $this->items->index();
     }
 
-    public function store(Request $request) {
+    public function store(ItemRequest $request) {
         return $this->items->store($request);
     }
 
