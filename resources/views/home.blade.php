@@ -21,7 +21,7 @@
 
                                         <div class="card" style="overflow-y:scroll;max-height: 100vh;">
                                             <div class="card-header p-3">
-                                                <h5 class="mb-0"><i class="fas fa-tasks me-2"></i>Task List</h5>
+                                                <h5 class="mb-0"><i class="fas fa-tasks me-2"></i>To DO Item List</h5>
                                                 <a href="javascript::void(0)" class="btn btn-sm btn-primary" data-bs-toggle="modal" data-bs-target="#myModal" style="float: right">Add New</a>
                                             </div>
                                             <div class="card-body" data-mdb-perfect-scrollbar="true"
