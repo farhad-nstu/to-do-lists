@@ -9,7 +9,7 @@ class Item extends Model
 {
     use HasFactory;
     protected $table = 'to_do_items';
-    protected $fillable = ['item_name','status'];
+    protected $fillable = ['item_name','status','created_by'];
 
     public function tasks() {
         return $this->hasMany(Task::class, 'item_id');

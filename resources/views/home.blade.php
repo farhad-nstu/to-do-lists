@@ -30,66 +30,45 @@
                                                 <table class="table mb-0">
                                                     <thead>
                                                         <tr>
-                                                            <th scope="col">Team Member</th>
-                                                            <th scope="col">Task</th>
-                                                            <th scope="col">Priority</th>
+                                                            <th scope="col">#</th>
+                                                            <th scope="col">Item</th>
+                                                            <th scope="col">Status</th>
                                                             <th scope="col">Actions</th>
                                                         </tr>
                                                     </thead>
                                                     <tbody>
-                                                        <tr class="fw-normal">
-                                                            <th>
-                                                                <img src="https://mdbcdn.b-cdn.net/img/Photos/Avatars/avatar-5.webp"
-                                                                    class="shadow-1-strong rounded-circle" alt="avatar 1"
-                                                                    style="width: 55px; height: auto;">
-                                                                <span class="ms-2">Alice Mayer</span>
-                                                            </th>
-                                                            <td class="align-middle">
-                                                                <span>Call Sam For payments</span>
-                                                            </td>
-                                                            <td class="align-middle">
-                                                                <h6 class="mb-0"><span class="badge bg-danger">High
-                                                                        priority</span></h6>
-                                                            </td>
-                                                            <td class="align-middle">
-                                                                <a href="#!" data-mdb-toggle="tooltip" title="Done"><i class="fas fa-check text-success me-3"></i></a>
-                                                                <a href="javascript::void(0)" onclick="editItem(1, 'test', 1)" data-mdb-toggle="tooltip" title="Edit"><i class="fas fa-pen text-info"></i></a>
-                                                                <a href="#!" data-mdb-toggle="tooltip" title="Remove"><i class="fas fa-trash-alt text-danger"></i></a>
-                                                            </td>
-                                                        </tr>
-                                                        <tr class="fw-normal">
-                                                            <th>
-                                                                <img src="https://mdbcdn.b-cdn.net/img/Photos/Avatars/avatar-4.webp"
-                                                                    class="shadow-1-strong rounded-circle" alt="avatar 1"
-                                                                    style="width: 55px; height: auto;">
-                                                                <span class="ms-2">Kate Moss</span>
-                                                            </th>
-                                                            <td class="align-middle">Make payment to Bluedart</td>
-                                                            <td class="align-middle">
-                                                                <h6 class="mb-0"><span class="badge bg-success">Low
-                                                                        priority</span></h6>
-                                                            </td>
-                                                            <td class="align-middle">
-                                                                <a href="#!" data-mdb-toggle="tooltip"
-                                                                    title="Done"><i
-                                                                        class="fas fa-check text-success me-3"></i></a>
-                                                                        <a href="javascript::void(0)" onclick="editItem(2, 'test 2', 2)" data-mdb-toggle="tooltip" title="Edit"><i class="fas fa-pen text-info"></i></a>
-                                                                <a href="#!" data-mdb-toggle="tooltip"
-                                                                    title="Remove"><i
-                                                                        class="fas fa-trash-alt text-danger"></i></a>
-                                                            </td>
-                                                        </tr>
+                                                        @foreach ($items as $key => $item)
+                                                            <tr class="fw-normal">
+                                                                {{--  <th>
+                                                                    <img src="https://mdbcdn.b-cdn.net/img/Photos/Avatars/avatar-5.webp"
+                                                                        class="shadow-1-strong rounded-circle" alt="avatar 1"
+                                                                        style="width: 55px; height: auto;">
+                                                                    <span class="ms-2">Alice Mayer</span>
+                                                                </th>  --}}
+                                                                <td class="align-middle">{{ ++$key }}</td>
+                                                                <td class="align-middle">
+                                                                    <span>{{ $item->item_name }}</span>
+                                                                </td>
+                                                                <td class="align-middle">
+                                                                    <h6 class="mb-0"><span class="{{ $item->status == 1 ? 'badge bg-danger' : 'badge bg-primary' }}">{{ $item->status == 1 ? 'Completed' : 'Not Completed' }}</span></h6>
+                                                                </td>
+                                                                <td class="align-middle">
+                                                                    <a href="javascript:void(0)" onclick="editItem(`{{ $item->id }}`, `{{ $item->item_name }}`, `{{ $item->status }}`)" data-mdb-toggle="tooltip" title="Edit"><i class="fas fa-pen text-info"></i></a>
+                                                                    <a href="javascript:void(0)" data-mdb-toggle="tooltip" title="Remove" onclick="checkConfirmation(`{{ $item->id }}`)"><i class="fas fa-trash-alt text-danger"></i></a>
+                                                                    <form id="delete-form-{{ $item->id }}" action="{{ route('items.destroy',$item->id) }}" method="POST" style="display: none;">
+                                                                        @csrf @method('delete')
+                                                                    </form>
+                                                                </td>
+                                                            </tr>
+                                                        @endforeach
                                                     </tbody>
                                                 </table>
-
                                             </div>
                                         </div>
-
                                     </div>
                                 </div>
                             </div>
                         </section>
-
                     </div>
                 </div>
             </div>
@@ -103,6 +82,13 @@
                 $("#item_name").val(name)
                 $("#status").val(status)
                 $("#myModal").modal('show');
+            }
+            function checkConfirmation(id) {
+                if(confirm("Are You Sure to delete this?")) {
+                    event.preventDefault(); 
+                    $("#delete-form-"+id).submit();
+                }
+                return false
             }
         </script>
     @endpush

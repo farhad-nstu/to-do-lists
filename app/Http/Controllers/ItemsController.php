@@ -3,18 +3,26 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Repositories\ItemRepository;
 
 class ItemsController extends Controller
 {
-    public function __construct() {
+    private $items;
+
+    public function __construct(ItemRepository $items) {
         $this->middleware('auth');
+        $this->items = $items;
     }
 
     public function index() {
-        dd("fg");
+        return $this->items->index();
     }
 
     public function store(Request $request) {
-        dd($request->all());
+        return $this->items->store($request);
+    }
+
+    public function destroy($id) {
+        return $this->items->destroy($id);
     }
 }
