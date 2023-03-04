@@ -21,3 +21,6 @@ Auth::routes();
 
 Route::get('/home', 'ItemsController@index')->name('home');
 Route::resource('items', 'ItemsController');
+Route::get('item/tasks/{item_id}', 'TasksController@index')->name('item.tasks.index');
+Route::post('item/tasks', 'TasksController@store')->name('item.tasks.store');
+Route::get('item/tasks-destroy/{task_id}', 'TasksController@destroy')->name('item.tasks.destroy');

@@ -9,8 +9,8 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <input type="text" id="item_name" name="item_name" class="form-control" placeholder="Ex: Make Payment">
-                    <select name="status" id="status" class="form-control">
+                    <input type="text" id="item_name" name="item_name" class="form-control" placeholder="Ex: Make Payment" required>
+                    <select name="status" id="status" class="form-control" required>
                         <option value="">---------</option>
                         <option value="1">Completed</option>
                         <option value="2">Not Completed</option>

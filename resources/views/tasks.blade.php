@@ -1,5 +1,4 @@
 @extends('layouts.app')
-
 @section('content')
     <div class="container">
         <div class="row justify-content-center">
@@ -21,7 +20,8 @@
 
                                         <div class="card" style="overflow-y:scroll;max-height: 100vh;">
                                             <div class="card-header p-3">
-                                                <h5 class="mb-0"><i class="fas fa-tasks me-2"></i>Task List</h5>
+                                                <h5 class="mb-0"><i class="fas fa-tasks me-2"></i>Task List of <span style="font-size: 20px; color: rgb(236, 22, 57)"> "{{ $item->item_name }}" </span></h5>
+                                                <a href="{{ route('items.index') }}" class="btn btn-sm btn-info" style="float: right; margin-right: 5px !important;">Back</a>
                                                 <a href="javascript::void(0)" class="btn btn-sm btn-primary" data-bs-toggle="modal" data-bs-target="#myModal" style="float: right">Add New</a>
                                             </div>
                                             <div class="card-body" data-mdb-perfect-scrollbar="true"
@@ -31,34 +31,24 @@
                                                     <thead>
                                                         <tr>
                                                             <th scope="col">#</th>
-                                                            <th scope="col">Item</th>
+                                                            <th scope="col">Task</th>
                                                             <th scope="col">Status</th>
                                                             <th scope="col">Actions</th>
                                                         </tr>
                                                     </thead>
                                                     <tbody>
-                                                        @foreach ($items as $key => $item)
+                                                        @foreach ($item->tasks as $key => $task)
                                                             <tr class="fw-normal">
-                                                                {{--  <th>
-                                                                    <img src="https://mdbcdn.b-cdn.net/img/Photos/Avatars/avatar-5.webp"
-                                                                        class="shadow-1-strong rounded-circle" alt="avatar 1"
-                                                                        style="width: 55px; height: auto;">
-                                                                    <span class="ms-2">Alice Mayer</span>
-                                                                </th>  --}}
                                                                 <td class="align-middle">{{ ++$key }}</td>
                                                                 <td class="align-middle">
-                                                                    <span>{{ $item->item_name }}</span>
+                                                                    <span>{{ $task->task_name }}</span>
                                                                 </td>
                                                                 <td class="align-middle">
-                                                                    <h6 class="mb-0"><span class="{{ $item->status == 1 ? 'badge bg-danger' : 'badge bg-primary' }}">{{ $item->status == 1 ? 'Completed' : 'Not Completed' }}</span></h6>
+                                                                    <h6 class="mb-0"><span class="{{ $task->status == 1 ? 'badge bg-danger' : 'badge bg-primary' }}">{{ $task->status == 1 ? 'Completed' : 'Not Completed' }}</span></h6>
                                                                 </td>
                                                                 <td class="align-middle">
-                                                                    <a href="javascript:void(0)" onclick="editItem(`{{ $item->id }}`, `{{ $item->item_name }}`, `{{ $item->status }}`)" data-mdb-toggle="tooltip" title="Edit"><i class="fas fa-pen text-primary"></i></a>
-                                                                    <a href="javascript:void(0)" data-mdb-toggle="tooltip" title="Remove" onclick="checkConfirmation(`{{ $item->id }}`)"><i class="fas fa-trash-alt text-danger"></i></a>
-                                                                    <a href="{{ route('item.tasks.index', $item->id) }}" data-mdb-toggle="tooltip" title="Tasks"><i class="fas fa-eye text-info"></i></a>
-                                                                    <form id="delete-form-{{ $item->id }}" action="{{ route('items.destroy',$item->id) }}" method="POST" style="display: none;">
-                                                                        @csrf @method('delete')
-                                                                    </form>
+                                                                    <a href="javascript:void(0)" onclick="editTask(`{{ $task->id }}`, `{{ $task->task_name }}`, `{{ $task->status }}`)" data-mdb-toggle="tooltip" title="Edit"><i class="fas fa-pen text-primary"></i></a>
+                                                                    <a href="{{ route('item.tasks.destroy',$task->id) }}" data-mdb-toggle="tooltip" title="Remove" onclick="return confirm('Are you sure you want to delete this task?');"><i class="fas fa-trash-alt text-danger"></i></a>
                                                                 </td>
                                                             </tr>
                                                         @endforeach
@@ -75,21 +65,14 @@
             </div>
         </div>
     </div>
-    @include('partials.itemModal')
+    @include('partials.taskModal')
     @push('custom_js')
         <script>
-            function editItem(id, name, status) {
-                $("#item_id").val(id)
-                $("#item_name").val(name)
+            function editTask(id, name, status) {
+                $("#task_id").val(id)
+                $("#task_name").val(name)
                 $("#status").val(status)
                 $("#myModal").modal('show');
-            }
-            function checkConfirmation(id) {
-                if(confirm("Are You Sure to delete this?")) {
-                    event.preventDefault(); 
-                    $("#delete-form-"+id).submit();
-                }
-                return false
             }
         </script>
     @endpush
