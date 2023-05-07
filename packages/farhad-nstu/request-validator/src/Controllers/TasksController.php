@@ -6,7 +6,7 @@ use App\Http\Controllers\Controller;
 
 class TasksController extends Controller
 {
-    public function index()
+    public function fetchData()
     {
         echo "Hello World";
     }
