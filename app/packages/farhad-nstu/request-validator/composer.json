@@ -1,0 +1,25 @@
+{
+    "name": "farhad-nstu/request-validator",
+    "description": "Request Validator",
+    "license": "MIT",
+    "keywords": ["request","validation","rules","messages"],
+    "authors": [
+        {
+            "name": "Mohammad Forhad",
+            "homepage": "https://github.com/farhad-nstu"
+        }
+    ],
+    "require": {},
+    "autoload": {
+        "psr-4": {
+            "farhad\\requestValidator\\": "src"
+        }
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "farhad\\RequestValidator\\RequestValidatorServiceProvider"
+            ]
+        }
+    }
+}
